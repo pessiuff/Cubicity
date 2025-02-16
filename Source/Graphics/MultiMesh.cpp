@@ -9,6 +9,7 @@ MultiCubeRenderer::MultiCubeRenderer(ShaderProgram* shader, Texture2D* m_texture
     , m_vertexBufferObject(0)
     , m_elementBufferObject(0)
     , m_positionBufferObject(0)
+	, m_textureCoordinateBufferObject(0)
     , m_dirty(false)
 {
 }
@@ -53,6 +54,15 @@ void MultiCubeRenderer::Initialize()
     glEnableVertexAttribArray(1);
     glVertexAttribDivisor(1, 1);
 
+	// Create and bind the Texture Coordinate Buffer Object.
+	glGenBuffers(1, &m_textureCoordinateBufferObject);
+	glBindBuffer(GL_ARRAY_BUFFER, m_textureCoordinateBufferObject);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(CUBE_TEXTURE_COORDINATES), CUBE_TEXTURE_COORDINATES, GL_STATIC_DRAW);
+
+	// Set up the texture coordinate attribute pointers.
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)(0));
+	glEnableVertexAttribArray(2);
+
     // It's safe to unbind the array buffer now; the EBO remains associated with the VAO.
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -71,7 +81,7 @@ void MultiCubeRenderer::Render(const glm::mat4& viewMatrix, const glm::mat4& pro
 
     // Bind the shader and texture.
     m_shader->Use();
-    // m_texture->Bind(); // Uncomment when Texture2D provides a Bind method.
+    m_texture->Bind();
 
     m_shader->SetMatrix4("u_ViewProjection", projectionMatrix * viewMatrix);
 
@@ -84,7 +94,7 @@ void MultiCubeRenderer::Render(const glm::mat4& viewMatrix, const glm::mat4& pro
     // Unbind the VAO and shader.
     glBindVertexArray(0);
     m_shader->Unuse();
-	// m_texture->Unbind(); // Uncomment when Texture2D provides an Unbind method.
+    m_texture->Unbind();
 }
 
 void MultiCubeRenderer::UpdateInstanceBuffer()

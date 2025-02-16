@@ -10,12 +10,12 @@ int Game::Run()
 
     while (!glfwWindowShouldClose(m_window))
     {
-		float firstTime = glfwGetTime();
+        float firstTime = glfwGetTime();
 
         Update();
         Render();
 
-		m_frameTime = glfwGetTime() - firstTime;
+        m_frameTime = glfwGetTime() - firstTime;
     }
 
     Shutdown();
@@ -50,25 +50,25 @@ bool Game::Initialize()
         return false;
     }
 
-	// Set up input callbacks
-	glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-		
-	});
+    // Set up input callbacks
+    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        
+    });
 
-	// Framebuffer size callback
-	glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
-	{
-		glViewport(0, 0, width, height);
-	});
+    // Framebuffer size callback
+    glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    });
 
     // Setup viewport and enable depth testing
     glfwSwapInterval(1);
     glViewport(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     glEnable(GL_DEPTH_TEST);
-
-	// Initialize the scene manager and start the game
-	m_sceneManager.ChangeScene(std::make_unique<GameplayScene>());
+    
+    // Initialize the scene manager and start the game
+    m_sceneManager.ChangeScene(std::make_unique<GameplayScene>());
 
     return true;
 }
@@ -76,22 +76,22 @@ bool Game::Initialize()
 void Game::Update()
 {
     glfwPollEvents();
-	m_sceneManager.Update(m_window, m_frameTime);
+    m_sceneManager.Update(m_window, m_frameTime);
 }
 
 void Game::Render()
 {
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	m_sceneManager.Draw();
-
+    
+    m_sceneManager.Draw();
+    
     glfwSwapBuffers(m_window);
 }
 
 void Game::Shutdown()
 {
-	m_sceneManager.CleanUp();
+    m_sceneManager.CleanUp();
     glfwDestroyWindow(m_window);
     glfwTerminate();
 }

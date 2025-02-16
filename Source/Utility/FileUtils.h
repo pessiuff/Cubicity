@@ -5,5 +5,5 @@
 class FileUtils
 {
 public:
-	static bool ReadFile(const std::string& filePath, std::string* targetString);
+    static bool ReadFile(const std::string& filePath, std::string* targetString);
 };

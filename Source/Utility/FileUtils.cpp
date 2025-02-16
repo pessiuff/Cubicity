@@ -11,6 +11,6 @@ bool FileUtils::ReadFile(const std::string& filePath, std::string* targetString)
 
     std::stringstream buffer;
     buffer << fileStream.rdbuf();
-	*targetString = buffer.str();
+    *targetString = buffer.str();
     return true;
 }

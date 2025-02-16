@@ -18,7 +18,7 @@ public:
 private:
     ShaderProgram* m_shader;
     Texture2D* m_texture;
-    GLuint m_vertexArrayObject, m_vertexBufferObject, m_positionBufferObject, m_elementBufferObject;
+    GLuint m_vertexArrayObject, m_vertexBufferObject, m_positionBufferObject, m_textureCoordinateBufferObject, m_elementBufferObject;
     bool m_dirty;
     std::vector<glm::vec3> m_positions;
 

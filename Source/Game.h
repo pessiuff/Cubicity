@@ -24,7 +24,7 @@ private:
 
     GLFWwindow* m_window = nullptr;
     SceneManager m_sceneManager = {};
-	float m_frameTime = 0;
+    float m_frameTime = 0;
 
     bool Initialize();
     void Update();

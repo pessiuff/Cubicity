@@ -9,8 +9,8 @@
 class GameplayScene : public Scene
 {
 public:
-	GameplayScene();
-	~GameplayScene() = default;
+    GameplayScene();
+    ~GameplayScene() = default;
 
     void Init(SceneManager* sceneManager) override;
     void Update(GLFWwindow* window, float deltaTime) override;
@@ -18,14 +18,14 @@ public:
     void CleanUp() override;
 
 private:
-	SceneManager* m_sceneManager = nullptr;
+    SceneManager* m_sceneManager = nullptr;
 
-	ShaderProgram m_shader;
-	Texture2D m_texture;
-	MultiCubeRenderer m_cubeRenderer;
+    ShaderProgram m_shader;
+    Texture2D m_texture;
+    MultiCubeRenderer m_cubeRenderer;
 
-	glm::mat4 m_viewMatrix;
-	glm::mat4 m_projectionMatrix;
+    glm::mat4 m_viewMatrix;
+    glm::mat4 m_projectionMatrix;
 
     glm::vec3 m_cameraPos;
     glm::vec3 m_cameraFront;

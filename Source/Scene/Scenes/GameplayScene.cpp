@@ -5,31 +5,31 @@
 #include <GLFW/glfw3.h>
 
 GameplayScene::GameplayScene()
-	: m_shader(), m_texture(), m_cubeRenderer(&m_shader, &m_texture), m_viewMatrix(), m_projectionMatrix()
+    : m_shader(), m_texture(), m_cubeRenderer(&m_shader, &m_texture), m_viewMatrix(), m_projectionMatrix()
 {
-	m_cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
-	m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    m_cameraPos = glm::vec3(0.0f, 0.0f, 10.0f);
+    m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 void GameplayScene::Init(SceneManager* sceneManager)
 {
-	m_sceneManager = sceneManager;
+    m_sceneManager = sceneManager;
 
-	m_shader.Initialize("shaders/default_cube.vert", "shaders/default_cube.frag");
-	// m_texture.Initialize("textures/wooden_crate.jpg");
-	m_cubeRenderer.Initialize();
+    m_shader.Initialize("shaders/default_cube.vert", "shaders/default_cube.frag");
+    m_texture.Load("textures/wooden_crate.jpg");
+    m_cubeRenderer.Initialize();
 
-	for (int x = 0; x < 1000; x++)
-	{
-		for (int z = 0; z < 1000; z++)
-		{
-			m_cubeRenderer.AddCube(glm::vec3(x, 0, z));
-		}
-	}
+    for (int x = 0; x < 1024 * 2; x += 2)
+    {
+        for (int z = 0; z < 1024 * 2; z += 2)
+        {
+            m_cubeRenderer.AddCube(glm::vec3(x, 0, z));
+        }
+    }
 
-	m_viewMatrix = glm::lookAt(glm::vec3(0, 0, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	m_projectionMatrix = glm::perspective(glm::radians(90.0f), (float) VIEWPORT_WIDTH / VIEWPORT_HEIGHT, 0.1f, 100.0f);
+    m_viewMatrix = glm::lookAt(glm::vec3(0, 0, 10), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    m_projectionMatrix = glm::perspective(glm::radians(90.0f), (float) VIEWPORT_WIDTH / VIEWPORT_HEIGHT, 0.1f, 100.0f);
 }
 
 void GameplayScene::Update(GLFWwindow* window, float frameTime)
@@ -78,7 +78,7 @@ void GameplayScene::Update(GLFWwindow* window, float frameTime)
 
 void GameplayScene::Draw()
 {
-	m_cubeRenderer.Render(m_viewMatrix, m_projectionMatrix);
+    m_cubeRenderer.Render(m_viewMatrix, m_projectionMatrix);
 }
 
 void GameplayScene::CleanUp()

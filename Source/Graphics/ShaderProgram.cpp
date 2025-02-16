@@ -4,7 +4,7 @@
 #include <iostream>
 
 ShaderProgram::ShaderProgram()
-	: m_programHandle(0)
+    : m_programHandle(0)
 {
 }
 
@@ -103,16 +103,16 @@ void ShaderProgram::Initialize(const std::string& vertexShaderPath, const std::s
 
 void ShaderProgram::SetMatrix4(const std::string& name, const glm::mat4& value) const
 {
-	if (m_programHandle == 0)
-	{
-		return;
-	}
+    if (m_programHandle == 0)
+    {
+        return;
+    }
 
-	GLint location = glGetUniformLocation(m_programHandle, name.c_str());
-	if (location != -1)
-	{
-		glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
-	}
+    GLint location = glGetUniformLocation(m_programHandle, name.c_str());
+    if (location != -1)
+    {
+        glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+    }
 }
 
 void ShaderProgram::Use() const
