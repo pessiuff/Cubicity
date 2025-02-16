@@ -1,7 +1,6 @@
 #include "MultiMesh.h"
 
 #include "../Constants.h"
-#include <glm/gtc/matrix_transform.hpp>
 
 MultiCubeRenderer::MultiCubeRenderer(ShaderProgram* shader, Texture2D* m_texture)
     : m_shader(shader)
@@ -32,13 +31,13 @@ void MultiCubeRenderer::Initialize()
     // Create and bind the Vertex Buffer Object.
     glGenBuffers(1, &m_vertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(CUBE_VERTICES), CUBE_VERTICES, GL_STATIC_DRAW);
 
     // Create and bind the Element Buffer Object.
     // The EBO binding is stored inside the VAO, so we keep it bound.
     glGenBuffers(1, &m_elementBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeIndices), cubeIndices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CUBE_INDICES), CUBE_INDICES, GL_STATIC_DRAW);
 
     // Set up the vertex attribute pointers.
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
@@ -65,29 +64,27 @@ void MultiCubeRenderer::AddCube(const glm::vec3& position)
     m_dirty = true;
 }
 
-void MultiCubeRenderer::Render()
+void MultiCubeRenderer::Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
     // Update the instance buffer if necessary.
     UpdateInstanceBuffer();
 
-    // Bind the shader and texture (assuming the texture has a Bind() method).
+    // Bind the shader and texture.
     m_shader->Use();
-    // m_texture->Bind(); // Uncomment if Texture2D provides a Bind method.
+    // m_texture->Bind(); // Uncomment when Texture2D provides a Bind method.
 
-    glm::mat4 view = glm::lookAt(glm::vec3(0, 5, 5), glm::vec3(0), glm::vec3(0, 1, 0));
-    glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float) VIEWPORT_WIDTH / VIEWPORT_HEIGHT, 0.1f, 100.0f);
-    m_shader->SetMatrix4("u_ViewProjection", proj * view);
+    m_shader->SetMatrix4("u_ViewProjection", projectionMatrix * viewMatrix);
 
     // Bind the VAO which already includes the EBO binding.
     glBindVertexArray(m_vertexArrayObject);
 
     // Draw all instances using instanced rendering.
-    glDrawElementsInstanced(GL_TRIANGLES, sizeof(cubeIndices) / sizeof(cubeIndices[0]), GL_UNSIGNED_INT, nullptr, m_positions.size());
+    glDrawElementsInstanced(GL_TRIANGLES, sizeof(CUBE_INDICES) / sizeof(CUBE_INDICES[0]), GL_UNSIGNED_INT, nullptr, m_positions.size());
 
     // Unbind the VAO and shader.
     glBindVertexArray(0);
     m_shader->Unuse();
-	// m_texture->Unbind(); // Uncomment if Texture2D provides an Unbind method.
+	// m_texture->Unbind(); // Uncomment when Texture2D provides an Unbind method.
 }
 
 void MultiCubeRenderer::UpdateInstanceBuffer()

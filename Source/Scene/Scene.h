@@ -1,6 +1,7 @@
 #pragma once
 
 class SceneManager;
+struct GLFWwindow;
 
 class Scene {
 public:
@@ -10,7 +11,7 @@ public:
     virtual void Init(SceneManager* sceneManager) = 0;
 
     // Called every frame to update the logic of the scene
-    virtual void Update(float frameTime) = 0;
+    virtual void Update(GLFWwindow* window, float frameTime) = 0;
 
     // Called every frame to render the scene
     virtual void Draw() = 0;

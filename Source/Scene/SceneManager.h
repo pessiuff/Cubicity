@@ -10,7 +10,7 @@ public:
 	~SceneManager() = default;
 
 	void ChangeScene(std::unique_ptr<Scene> scene);
-	void Update(float frameTime);
+	void Update(GLFWwindow* window, float frameTime);
 	void Draw();
 	void CleanUp();
 

@@ -10,8 +10,12 @@ int Game::Run()
 
     while (!glfwWindowShouldClose(m_window))
     {
+		float firstTime = glfwGetTime();
+
         Update();
         Render();
+
+		m_frameTime = glfwGetTime() - firstTime;
     }
 
     Shutdown();
@@ -72,7 +76,7 @@ bool Game::Initialize()
 void Game::Update()
 {
     glfwPollEvents();
-	m_sceneManager.Update(0.0f);
+	m_sceneManager.Update(m_window, m_frameTime);
 }
 
 void Game::Render()

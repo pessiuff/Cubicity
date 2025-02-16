@@ -13,7 +13,7 @@ public:
 
     void Initialize();
     void AddCube(const glm::vec3& position);
-    void Render();
+    void Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
 private:
     ShaderProgram* m_shader;

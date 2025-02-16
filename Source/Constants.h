@@ -6,7 +6,7 @@ constexpr int VIEWPORT_HEIGHT = 1080;
 constexpr const char* WINDOW_TITLE = "Cubicity";
 
 // Vertices for a cube (positions only)
-static const float cubeVertices[] = {
+static const float CUBE_VERTICES[] = {
     // Back face
     -0.5f, -0.5f, -0.5f, // 0
      0.5f, -0.5f, -0.5f, // 1
@@ -20,7 +20,7 @@ static const float cubeVertices[] = {
 };
 
 // Indices for the element buffer object (EBO)
-static const unsigned int cubeIndices[] = {
+static const unsigned int CUBE_INDICES[] = {
     // Back face
     0, 1, 2, 2, 3, 0,
     // Front face

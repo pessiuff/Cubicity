@@ -10,11 +10,11 @@ void SceneManager::ChangeScene(std::unique_ptr<Scene> scene)
 	m_currentScene->Init(this);
 }
 
-void SceneManager::Update(float frameTime)
+void SceneManager::Update(GLFWwindow* window, float frameTime)
 {
 	if (m_currentScene)
 	{
-		m_currentScene->Update(frameTime);
+		m_currentScene->Update(window, frameTime);
 	}
 }
 
