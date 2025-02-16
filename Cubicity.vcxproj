@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Scene\Scenes\GameplayScene.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Graphics\MultiMesh.cpp" />
     <ClCompile Include="Source\Graphics\ShaderProgram.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -91,17 +93,20 @@
     <ClCompile Include="Source\Utility\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scene\Scenes\GameplayScene.h" />
+    <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\Constants.h" />
     <ClInclude Include="Source\Graphics\MultiMesh.h" />
     <ClInclude Include="Source\Graphics\ShaderProgram.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Graphics\Texture2D.h" />
+    <ClInclude Include="Source\Scene\Scene.h" />
     <ClInclude Include="Source\Utility\FileUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
-    <None Include="Source\.gitignore" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

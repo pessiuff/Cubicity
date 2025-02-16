@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Graphics/ShaderProgram.h"
-#include "Graphics/Texture2D.h"
-#include "Graphics/MultiMesh.h"
+#include "Scene/SceneManager.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -18,17 +16,15 @@ public:
     int Run();
 
 private:
-    Game();
+    Game() = default;
     ~Game() = default;
 
     Game(const Game&) = delete;
     Game& operator=(const Game&) = delete;
 
-    GLFWwindow* m_window;
-
-    ShaderProgram m_shader;
-    Texture2D m_texture;
-    MultiCubeRenderer m_cubeRenderer;
+    GLFWwindow* m_window = nullptr;
+    SceneManager m_sceneManager = {};
+	float m_frameTime = 0;
 
     bool Initialize();
     void Update();

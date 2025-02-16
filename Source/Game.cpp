@@ -1,14 +1,7 @@
 #include "Game.h"
 
 #include "Constants.h"
-
-Game::Game()
-    : m_window(nullptr)
-    , m_shader()
-    , m_texture()
-    , m_cubeRenderer(&m_shader, &m_texture)
-{
-}
+#include "Scene/Scenes/GameplayScene.h"
 
 int Game::Run()
 {
@@ -53,23 +46,25 @@ bool Game::Initialize()
         return false;
     }
 
+	// Set up input callbacks
+	glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		
+	});
+
+	// Framebuffer size callback
+	glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	});
+
     // Setup viewport and enable depth testing
     glfwSwapInterval(1);
     glViewport(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     glEnable(GL_DEPTH_TEST);
 
-    // Initialize shader and cube renderer
-    m_shader.Initialize("shaders/default_cube.vert", "shaders/default_cube.frag");
-    m_cubeRenderer.Initialize();
-
-    // Add cubes spread over the XZ-plane
-    for (int i = 0; i < 256; i += 2)
-    {
-        for (int j = 0; j < 256; j += 2)
-        {
-            m_cubeRenderer.AddCube(glm::vec3(i, 0, j)); // Spread in XZ-plane
-        }
-    }
+	// Initialize the scene manager and start the game
+	m_sceneManager.ChangeScene(std::make_unique<GameplayScene>());
 
     return true;
 }
@@ -77,6 +72,7 @@ bool Game::Initialize()
 void Game::Update()
 {
     glfwPollEvents();
+	m_sceneManager.Update(0.0f);
 }
 
 void Game::Render()
@@ -84,13 +80,14 @@ void Game::Render()
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    m_cubeRenderer.Render();
+	m_sceneManager.Draw();
 
     glfwSwapBuffers(m_window);
 }
 
 void Game::Shutdown()
 {
+	m_sceneManager.CleanUp();
     glfwDestroyWindow(m_window);
     glfwTerminate();
 }
